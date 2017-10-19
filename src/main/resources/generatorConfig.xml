@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <properties resource="generator.properties"/>
+
+    <context id="MybatisGenerator" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+<!--         <property name="beginningDelimiter" value="`"/> -->
+<!--         <property name="endingDelimiter" value="`"/> -->
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="armor.orm.component.BaseMapper"/>
+        </plugin>
+
+        <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
+			connectionURL="jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.1.215)(PORT = 1521))(CONNECT_DATA =(SERVER =DEDICATED)(SERVICE_NAME = orcl)))"
+			userId="oauth"
+			password="oauth123">
+		</jdbcConnection>
+
+<!--         <jdbcConnection driverClass="${druid.driver-class}" -->
+<!--                         connectionURL="${druid.url}" -->
+<!--                         userId="${druid.username}" -->
+<!--                         password="${druid.password}"> -->
+<!--         </jdbcConnection> -->
+
+		<!-- domain class -->
+		<javaModelGenerator targetPackage="poet.oauth.module.user.entity"
+			targetProject="src/test/java">
+			<property name="rootClass" value="armor.orm.component.BaseEntity" />
+<!-- 			<property name="enableSubPackages" value="true" /> -->
+<!-- 			<property name="trimStrings" value="true" /> -->
+		</javaModelGenerator>
+        
+        <!-- xml -->
+		<sqlMapGenerator targetPackage="mapper" targetProject="src/test/resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+        <javaClientGenerator targetPackage="poet.oauth.module.user.mapper" targetProject="src/test/java"
+                             type="XMLMAPPER"/>
+
+        <table tableName="T_B_%" schema="oauth" ignoreTablePrefix="T_B_">
+        	<property name="ignoreQualifiersAtRuntime" value="true" />
+            <!--mysql 配置-->
+<!--             <generatedKey column="id" sqlStatement="Mysql" identity="true"/> -->
+            <!--oracle 配置-->
+<!--             <generatedKey column="id" sqlStatement="select sys_guid() from dual" identity="false" type="pre"/> -->
+        </table>
+    </context>
+</generatorConfiguration>
